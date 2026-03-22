@@ -76,7 +76,7 @@ output/*.pdf
 - **Dates in YAML frontmatter**: `YYYY/MM -- YYYY/MM` (double dash)
 - **Logo paths in Typst**: `image("../assets/logos/company.png")` (note `../` prefix from module dirs)
 - **Multi-role mode**: Requires `display_entry_society_first = true` in `metadata.toml`
-- **ATS keywords**: Set in `metadata.toml` `[inject].injected_keywords_list`
+- **ATS keywords**: Set `inject_keywords = true` and fill `injected_keywords_list` in `metadata.toml` `[inject]`
 - **Module order**: Controlled by `import-modules(...)` array in `cv.typ`
 
 ## Dependencies

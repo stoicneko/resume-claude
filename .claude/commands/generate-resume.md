@@ -151,7 +151,7 @@ Based on the strategy, update the `import-modules` call in `cv.typ` to reflect t
 
 ### Step 7: Update metadata.toml
 
-- Update `[inject].injected_keywords_list` with ATS keywords
+- Set `[inject].inject_keywords = true` and update `[inject].injected_keywords_list` with ATS keywords
 - Update `[lang.en].header_quote` and `[lang.zh].header_quote` to match target role
 
 ### Step 8: Compile PDFs
