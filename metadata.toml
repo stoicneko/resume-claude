@@ -8,7 +8,7 @@ language = "en"
     paper_size = "a4"
 
     [layout.fonts]
-        regular_fonts = ["Source Sans 3"]
+        regular_fonts = ["Source Sans 3", "Source Sans Pro"]
         header_font = "Roboto"
 
     [layout.header]
@@ -26,7 +26,10 @@ language = "en"
         display_footer = true
 
 [inject]
+    inject_ai_prompt = false
+    inject_keywords = false
     injected_keywords_list = []
+    injected_ai_prompt_text = ""
 
 [personal]
     first_name = "Your"
