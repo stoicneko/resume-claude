@@ -1,0 +1,17 @@
+# Build output
+output/
+*.pdf
+
+# History
+.history/
+
+# Typst
+*.typ.bak
+
+# Editors
+.idea/
+.vs/
+.vscode/
+
+# OS
+.DS_Store
