@@ -1,0 +1,59 @@
+language = "en"
+
+[layout]
+    awesome_color = "skyblue"
+    before_section_skip = "1pt"
+    before_entry_skip = "1pt"
+    before_entry_description_skip = "1pt"
+    paper_size = "a4"
+
+    [layout.fonts]
+        regular_fonts = ["Source Sans 3"]
+        header_font = "Roboto"
+
+    [layout.header]
+        header_align = "left"
+        display_profile_photo = false
+        profile_photo_radius = "50%"
+        info_font_size = "10pt"
+
+    [layout.entry]
+        display_entry_society_first = true
+        display_logo = false
+
+    [layout.footer]
+        display_page_counter = false
+        display_footer = true
+
+[inject]
+    injected_keywords_list = []
+
+[personal]
+    first_name = "Your"
+    last_name = "Name"
+
+    [personal.info]
+        email = "you@example.com"
+        phone = "+86 138-xxxx-xxxx"
+        github = "yourname"
+        linkedin = "yourname"
+        location = "City, Country"
+
+        [personal.info.custom-1]
+            awesomeIcon = "weixin"
+            text = "your_wechat_id"
+            link = ""
+
+[lang.en]
+    header_quote = "Software Engineer"
+    cv_footer = "Curriculum Vitae"
+    letter_footer = "Cover Letter"
+
+[lang.zh]
+    header_quote = "软件工程师"
+    cv_footer = "简历"
+    letter_footer = "求职信"
+
+[lang.non_latin]
+    name = "你的名字"
+    font = "Noto Sans CJK SC"
