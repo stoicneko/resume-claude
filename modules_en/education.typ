@@ -4,10 +4,20 @@
 
 #cv-entry(
   title: [M.S. in Computer Science],
-  society: [*University Name*],
-  date: [2019/09 - 2022/06],
-  location: [City],
+  society: [*Peking University*],
+  date: [2017/09 - 2020/06],
+  location: [Beijing],
   description: list(
-    [Research focus: Distributed Systems],
+    [Research focus: Distributed Systems and Container Orchestration],
+  ),
+)
+
+#cv-entry(
+  title: [B.S. in Computer Science],
+  society: [*Wuhan University*],
+  date: [2013/09 - 2017/06],
+  location: [Wuhan],
+  description: list(
+    [GPA: 3.7/4.0],
   ),
 )

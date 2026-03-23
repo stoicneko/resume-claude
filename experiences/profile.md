@@ -1,17 +1,17 @@
 ---
-name: 你的名字 / Your Name
-email: you@example.com
-phone: "+86 138-xxxx-xxxx"
-wechat: your_wechat
-github: https://github.com/yourname
-blog: https://yourblog.dev
-linkedin: yourname
+name: 张三 / San Zhang
+email: san.zhang@example.com
+phone: "+86 138-0000-1234"
+wechat: zhangsan_dev
+github: https://github.com/zhangsan
+blog: https://zhangsan.dev
+linkedin: sanzhang
 ---
 
 ## 教育经历
 
-### 某大学 · 某学院 | 硕士（2019/09 - 2022/06）
-- 计算机科学，研究方向：xxx
+### 北京大学 · 信息科学技术学院 | 硕士（2017/09 - 2020/06）
+- 计算机科学与技术，研究方向：分布式系统与容器编排
 
-### 某大学 · 某学院 | 本科（2015/09 - 2019/06）
-- 某专业，GPA x.x/4.0
+### 武汉大学 · 计算机学院 | 本科（2013/09 - 2017/06）
+- 计算机科学与技术，GPA 3.7/4.0

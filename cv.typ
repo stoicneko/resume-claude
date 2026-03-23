@@ -22,4 +22,4 @@
 #show: cv.with(metadata)
 
 // Module load order — /generate-resume can adjust this array
-#import-modules(("education", "professional", "projects", "skills", "certificates"))
+#import-modules(("professional", "skills", "projects", "education", "certificates"))

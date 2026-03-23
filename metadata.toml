@@ -27,36 +27,36 @@ language = "en"
 
 [inject]
     inject_ai_prompt = false
-    inject_keywords = false
-    injected_keywords_list = []
+    inject_keywords = true
+    injected_keywords_list = ["SRE", "Kubernetes", "Docker", "Terraform", "Prometheus", "Grafana", "Go", "Python", "Linux", "CI/CD", "GitOps", "Observability", "Incident Response", "SLO", "SLI"]
     injected_ai_prompt_text = ""
 
 [personal]
-    first_name = "Your"
-    last_name = "Name"
+    first_name = "San"
+    last_name = "Zhang"
 
     [personal.info]
-        email = "you@example.com"
-        phone = "+86 138-xxxx-xxxx"
-        github = "yourname"
-        linkedin = "yourname"
-        location = "City, Country"
+        email = "san.zhang@example.com"
+        phone = "+86 138-0000-1234"
+        github = "zhangsan"
+        linkedin = "sanzhang"
+        location = "Beijing, China"
 
         [personal.info.custom-1]
             awesomeIcon = "weixin"
-            text = "your_wechat_id"
+            text = "zhangsan_dev"
             link = ""
 
 [lang.en]
-    header_quote = "Software Engineer"
+    header_quote = "Senior SRE Engineer"
     cv_footer = "Curriculum Vitae"
     letter_footer = "Cover Letter"
 
 [lang.zh]
-    header_quote = "软件工程师"
+    header_quote = "高级 SRE 工程师"
     cv_footer = "简历"
     letter_footer = "求职信"
 
 [lang.non_latin]
-    name = "你的名字"
+    name = "张三"
     font = "Noto Sans CJK SC"
