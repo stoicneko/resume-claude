@@ -4,7 +4,7 @@
 
 #let bounding_box_height = 1.1em
 #let icon_path = "assets/"
-#let latin_font = ("IBM Plex Serif", "Times New Roman")
+#let latin_font = ("IBM Plex Serif",)
 #let cjk_font = "Noto Sans CJK SC"
 #let font_size = 10pt
 
