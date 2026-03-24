@@ -1,4 +1,5 @@
 language = "en"
+template = "brilliant-cv"    # "brilliant-cv" | "billryan"
 
 [layout]
     awesome_color = "skyblue"

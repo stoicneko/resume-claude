@@ -5,8 +5,15 @@ You are a resume optimization expert. Generate tailored Typst modules from `expe
 ## Input
 
 Argument: job title, job description text, or path to a file in `jobs/`.
+Optional flag: `--template brilliant-cv|billryan` (overrides `metadata.toml` `template` field)
 
 If no argument provided, ask: "请提供目标岗位名称或 JD 文件路径。"
+
+## Template Selection
+
+1. Check if `--template` flag is provided in the argument. If so, use that template.
+2. Otherwise, read `metadata.toml` field `template` (default: `"brilliant-cv"`).
+3. Valid values: `"brilliant-cv"`, `"billryan"`.
 
 ## Process
 
@@ -48,6 +55,7 @@ Wait for user confirmation before proceeding.
 
 ### Step 4: Backup Current Modules
 
+For **brilliant-cv** template:
 ```bash
 timestamp=$(date +%Y%m%d_%H%M%S)
 mkdir -p .history/modules_${timestamp}
@@ -55,9 +63,17 @@ cp -r modules_en/ .history/modules_${timestamp}/modules_en/ 2>/dev/null || true
 cp -r modules_zh/ .history/modules_${timestamp}/modules_zh/ 2>/dev/null || true
 ```
 
+For **billryan** template:
+```bash
+timestamp=$(date +%Y%m%d_%H%M%S)
+mkdir -p .history/modules_billryan_${timestamp}
+cp -r modules_billryan_en/ .history/modules_billryan_${timestamp}/modules_billryan_en/ 2>/dev/null || true
+cp -r modules_billryan_zh/ .history/modules_billryan_${timestamp}/modules_billryan_zh/ 2>/dev/null || true
+```
+
 ### Step 5: Generate Typst Modules
 
-Generate ALL of these files for BOTH `modules_en/` and `modules_zh/`:
+**If template is `brilliant-cv`:** Generate ALL of these files for BOTH `modules_en/` and `modules_zh/`.
 
 1. **professional.typ** — Work experience
    - Use `cv-entry-start` + `cv-entry-continued` for multi-role companies
@@ -142,9 +158,34 @@ Generate ALL of these files for BOTH `modules_en/` and `modules_zh/`:
 - Logo paths from module files need `../` prefix: `image("../assets/logos/company.png")`
 - Bold text: `[*bold text*]`
 
-### Step 6: Update cv.typ Module Order
+**If template is `billryan`:** Generate ALL of these files for BOTH `modules_billryan_en/` and `modules_billryan_zh/`:
 
-Based on the strategy, update the `import-modules` call in `cv.typ` to reflect the recommended section order. For example, a senior SRE role might use:
+1. **professional.typ** — Work experience
+   - Use Typst term lists: `/ *Company* #h(4pt) Role: #h(1fr) #date("YYYY/MM - YYYY/MM") #h(1em) #icon("location.svg") City`
+   - Bullet points with `- ` prefix
+   - Each module must import helpers: `#import "../templates/billryan/template.typ": icon, term, date`
+
+2. **education.typ** — Education
+   - Use: `/ *University*: Degree #term("YYYY/MM - YYYY/MM", "City")`
+
+3. **skills.typ** — Skills
+   - Use bold category + colon: `- *Category*: Skill1, Skill2, Skill3`
+
+4. **projects.typ** — Projects
+   - Use: `/ *Project* #h(4pt) Description: #h(1fr) #date("YYYY")`
+
+5. **certificates.typ** — Honors & Certifications
+   - Use: `- *Title* — Issuer (Year)`
+
+Section headings use level-2 with icon: `== #icon("users.svg") SECTION TITLE`
+Icons available: `users.svg` (experience), `graduation-cap.svg` (education), `info.svg` (skills), `github.svg` (projects), `award.svg` (honors)
+
+### Step 6: Update Entry Point Module Order
+
+**For brilliant-cv:** Update the `import-modules` call in `cv.typ`.
+**For billryan:** Update the `import-modules` call in `cv-billryan.typ`.
+
+Based on the strategy, reflect the recommended section order. For example, a senior SRE role might use:
 ```typst
 #import-modules(("professional", "skills", "projects", "education", "certificates"))
 ```
@@ -156,8 +197,14 @@ Based on the strategy, update the `import-modules` call in `cv.typ` to reflect t
 
 ### Step 8: Compile PDFs
 
+**For brilliant-cv:**
 ```bash
 make en && make zh
+```
+
+**For billryan:**
+```bash
+make billryan-en && make billryan-zh
 ```
 
 If compilation fails, read the error message and fix the offending module. Common issues:
@@ -172,8 +219,12 @@ Copy to named files:
 # Extract name from metadata.toml
 name=$(grep 'first_name' metadata.toml | head -1 | sed 's/.*= *"//;s/".*//')$(grep 'last_name' metadata.toml | head -1 | sed 's/.*= *"//;s/".*//')
 job="JobTitle"  # sanitized from input
+# For brilliant-cv:
 cp output/resume-en.pdf "output/${name}-${job}-en.pdf"
 cp output/resume-zh.pdf "output/${name}-${job}-zh.pdf"
+# For billryan:
+cp output/resume-billryan-en.pdf "output/${name}-${job}-billryan-en.pdf"
+cp output/resume-billryan-zh.pdf "output/${name}-${job}-billryan-zh.pdf"
 ```
 
 Report: "简历已生成！文件位于 `output/` 目录。"

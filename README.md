@@ -1,25 +1,33 @@
 # resume-claude
 
-AI-driven resume management powered by [Claude Code](https://docs.anthropic.com/en/docs/claude-code) + [Typst](https://typst.app/) + [brilliant-cv](https://github.com/mintyfrankie/brilliant-cv).
+AI-driven resume management powered by [Claude Code](https://docs.anthropic.com/en/docs/claude-code) + [Typst](https://typst.app/), with multiple template support.
 
 **One source of truth in Markdown, N tailored resumes in PDF.**
 
 [中文版](README_zh.md)
 
+## Templates
+
+| Template | Style | Preview |
+|----------|-------|---------|
+| [brilliant-cv](https://github.com/mintyfrankie/brilliant-cv) (default) | Modern, colored sidebar, tagged entries | `make en` |
+| [billryan](https://github.com/billryan/resume) | Classic, clean lines, compact layout | `make billryan-en` |
+
 ## How It Works
 
 ```
-experiences/*.md        (Markdown — single source of truth)
-       ↓  /generate-resume [job description]
-modules_en/*.typ        (AI-generated Typst modules)
-modules_zh/*.typ
+experiences/*.md            (Markdown — single source of truth)
+       ↓  /generate-resume [--template billryan] [job description]
+modules_en/*.typ            (brilliant-cv Typst modules)
+modules_billryan_en/*.typ   (billryan Typst modules)
        ↓  typst compile
-output/*.pdf            (ready-to-send resumes)
+output/*.pdf                (ready-to-send resumes)
 ```
 
 1. Maintain your experiences in plain Markdown under `experiences/`.
 2. Paste a job description and run `/generate-resume` — Claude Code reads your experience library, selects the most relevant entries, and generates bilingual Typst modules tailored to the role.
-3. Typst compiles the modules into polished PDFs using the brilliant-cv template.
+3. Choose a template style: use `--template billryan` for the classic look, or omit for the default brilliant-cv.
+4. Typst compiles the modules into polished PDFs.
 
 ## Quick Start
 
@@ -27,16 +35,24 @@ output/*.pdf            (ready-to-send resumes)
 
 - [Typst CLI](https://github.com/typst/typst) >= 0.14.0
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) (for AI-powered resume generation)
-- Fonts: Source Sans 3, Roboto (Latin); Noto Sans CJK SC (Chinese)
+- Fonts: Source Sans 3, Roboto (brilliant-cv); IBM Plex Serif (billryan); Noto Sans CJK SC (Chinese)
 
 ### Build
 
 ```bash
-make en          # Build English PDF  → output/resume-en.pdf
-make zh          # Build Chinese PDF  → output/resume-zh.pdf
-make all         # Build both (cleans first)
-make watch-en    # Watch mode — auto-rebuild on change
-make watch-zh
+# brilliant-cv template (default)
+make en          # English PDF  → output/resume-en.pdf
+make zh          # Chinese PDF  → output/resume-zh.pdf
+make all         # Both (cleans first)
+
+# billryan template
+make billryan-en    # English PDF  → output/resume-billryan-en.pdf
+make billryan-zh    # Chinese PDF  → output/resume-billryan-zh.pdf
+make billryan       # Both (cleans first)
+
+# Watch mode (auto-rebuild on change)
+make watch-en / make watch-billryan-en
+make watch-zh / make watch-billryan-zh
 ```
 
 ### Claude Code Slash Commands
@@ -46,41 +62,45 @@ Run these inside a Claude Code session:
 | Command | Description |
 |---------|-------------|
 | `/init [text]` | Initialize the experience library (import from existing resume or LinkedIn) |
-| `/generate-resume [job]` | Generate tailored Typst modules for a target job description |
+| `/generate-resume [--template billryan] [job]` | Generate tailored Typst modules for a target job description |
 | `/add-experience [desc]` | Add a new experience entry to the library |
 
 ## Directory Structure
 
 ```
 .
-├── experiences/          # Source of truth (Markdown)
-│   ├── profile.md        #   Personal info + education
-│   ├── work/             #   Work experience (one file per company)
-│   ├── projects.md       #   Personal / open-source projects
-│   ├── skills.md         #   Full skill inventory
-│   └── honors.md         #   Awards, certifications, metrics
-├── modules_en/           # AI-generated Typst modules (English)
-├── modules_zh/           # AI-generated Typst modules (Chinese)
-├── jobs/                 # Target job descriptions
-├── assets/logos/         # Company logos (optional)
-├── cv.typ                # Main Typst entry point
-├── metadata.toml         # brilliant-cv configuration
-├── Makefile              # Build commands
-└── output/               # Generated PDFs (git-ignored)
+├── experiences/              # Source of truth (Markdown)
+│   ├── profile.md            #   Personal info + education
+│   ├── work/                 #   Work experience (one file per company)
+│   ├── projects.md           #   Personal / open-source projects
+│   ├── skills.md             #   Full skill inventory
+│   └── honors.md             #   Awards, certifications, metrics
+├── modules_en/               # brilliant-cv modules (English)
+├── modules_zh/               # brilliant-cv modules (Chinese)
+├── modules_billryan_en/      # billryan modules (English)
+├── modules_billryan_zh/      # billryan modules (Chinese)
+├── templates/billryan/       # billryan template + SVG icons
+├── jobs/                     # Target job descriptions
+├── cv.typ                    # brilliant-cv entry point
+├── cv-billryan.typ           # billryan entry point
+├── metadata.toml             # Shared configuration
+├── Makefile                  # Build commands
+└── output/                   # Generated PDFs (git-ignored)
 ```
 
 ## Customization
 
 ### `metadata.toml`
 
+- **Template** — `template = "brilliant-cv"` or `"billryan"` (default for `/generate-resume`)
 - **Personal info** — name, email, phone, GitHub, LinkedIn, etc.
-- **Layout** — color theme, fonts, header alignment, page size
+- **Layout** — color theme, fonts, header alignment, page size (brilliant-cv)
 - **ATS keywords** — set `inject_keywords = true` and fill `injected_keywords_list`
 - **Language** — default `"en"`, override with `--input language=zh`
 
 ### Module Order
 
-Edit the `import-modules(...)` call in `cv.typ`:
+Edit the `import-modules(...)` call in the entry point (`cv.typ` or `cv-billryan.typ`):
 
 ```typst
 #import-modules(("professional", "skills", "projects", "education", "certificates"))
@@ -89,6 +109,7 @@ Edit the `import-modules(...)` call in `cv.typ`:
 ## Key Design Decisions
 
 - **Markdown-first**: All experience data lives in `experiences/*.md`. Typst modules are generated artifacts — never edit them by hand.
+- **Multi-template**: Choose between modern (brilliant-cv) and classic (billryan) styles from the same source data.
 - **Bilingual**: Chinese (1 page max) and English (1-2 pages) are generated from the same source.
 - **Tailored per job**: Each `/generate-resume` run selects and emphasizes different experiences based on the target role.
 - **ATS-friendly**: Hidden keyword injection for applicant tracking systems.
@@ -98,7 +119,7 @@ Edit the `import-modules(...)` call in `cv.typ`:
 | Dependency | Version | Purpose |
 |------------|---------|---------|
 | [Typst](https://typst.app/) | >= 0.14.0 | Document compilation |
-| [brilliant-cv](https://github.com/mintyfrankie/brilliant-cv) | 3.2.0 | CV template (auto-downloaded) |
+| [brilliant-cv](https://github.com/mintyfrankie/brilliant-cv) | 3.2.0 | Modern CV template (auto-downloaded) |
 | [Claude Code](https://docs.anthropic.com/en/docs/claude-code) | latest | AI resume generation |
 
 ## License
