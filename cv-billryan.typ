@@ -39,7 +39,6 @@
   items
 }
 
-// Apply template
 #show: doc => conf(
   name: display-name,
   info: contact-info,
@@ -47,7 +46,6 @@
   body: doc,
 )
 
-// Module import helper
 #let import-modules(modules, lang: cv-language) = {
   for module in modules {
     include { "modules_billryan_" + lang + "/" + module + ".typ" }

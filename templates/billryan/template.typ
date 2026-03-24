@@ -25,7 +25,7 @@
 }
 
 // Location pin icon + location string
-#let location(loc) = {
+#let loc-icon(loc) = {
   icon("location.svg")
   loc
 }
@@ -36,7 +36,7 @@
     #align(right)[
       #date(period)
       #h(1em)
-      #location(loc)
+      #loc-icon(loc)
     ]
   ]
 }
@@ -47,7 +47,7 @@
 // lang: "en" or "zh"
 // body: document content
 #let conf(name: "", info: (), lang: "en", body: []) = {
-  let fonts = if lang == "zh" or lang == "fr" {
+  let fonts = if lang == "zh" {
     (cjk_font,) + latin_font
   } else {
     latin_font
@@ -87,15 +87,12 @@
   if info.len() > 0 {
     let items = info.map(item => {
       let (icon_name, display, url) = item
-      let content = {
-        icon(icon_name, shift: 1.5pt)
-        if url != none and url != "" {
-          link(url)[#display]
-        } else {
-          display
-        }
+      icon(icon_name)
+      if url != none and url != "" {
+        link(url)[#display]
+      } else {
+        display
       }
-      content
     })
     align(center)[
       #text(size: 9pt)[
